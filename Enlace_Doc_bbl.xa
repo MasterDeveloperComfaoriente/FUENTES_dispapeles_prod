@@ -1,0 +1,627 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<api_class name="Enlace_Doc_bbl" package="DispapelesWS7" top="../" next="Enlace_LoteDocEstado_bbl" prev="Enlace_DocEstado_bbl">
+  <api_synopsis> Envio de documento a Dispapeles</api_synopsis>
+  <api_usage> Enlace con servicio web de Dispapeles para
+ el envio de un documento de factura electrónica</api_usage>
+  <function name="f_RespuestaEnvio_Recupera">
+    <api_synopsis> Recupera RespuestaEnvio</api_synopsis>
+    <api_usage> respuesta al cliente del web service sobre el almacenamiento de la información y genera los documentos xml y pdf</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaEnvio_Recupera()
+ RETURNING
+     codigoQr
+    ,consecutivo
+    ,cufe
+    ,descripcionProceso
+    ,estadoProceso
+    ,fechaExpedicion
+    ,fechaFactura
+    ,fechaRespuesta
+    ,firmaDelDocumento
+    ,idErp
+    ,prefijo
+    ,selloDeValidacion
+    ,tipoDocumento</pre>
+    </api_usage>
+    <return>codigoQr CÓDIGO QR PARA QUE SEA IMPLEMENTADO POR EL CLIENTE EN EL PDF. ESTE VALOR ES LA CADENA CONCATENADA DA LOS DATOS COMO LO PIDE LA DIAN</return>
+    <return>consecutivo CONSECUTIVO HABILITADO POR LA DIAN PARA FACTURAR ELECTRÓNICAMENTE</return>
+    <return>cufe CÓDIGO ÚNICO DE FACTURA ELECTRÓNICA. CON ESTE VALOR EL CLIENTE PODRÍA GENERAR LA REPRESENTACIÓN GRÁFICA SI ASÍ LO QUISIERA</return>
+    <return>descripcionProceso</return>
+    <return>estadoProceso 0 = ERROR; 1 = EXITOSO; 2 = EXITOSO CON NOTIFICACIONES; 3 = DOCUMENTO INGRESADO PREVIAMENTE; 4 = EL DOCUMENTO ESTÁ SIENDO PROCESADO; 24 = CONTINGENCIA DIAN</return>
+    <return>fechaExpedicion FECHA EN LA CUAL LA DIAN REALIZA LA VALIDACIÓN</return>
+    <return>fechaFactura FECHA DE CREACIÓN DE LA FACTURA EN EL ERP</return>
+    <return>fechaRespuesta FECHA DE LA RESPUESTA DEL WEB SERVICE</return>
+    <return>firmaDelDocumento FIRMA DEL DOCUMENTO EN CASO TAL EL CLIENTE LO REQUIERA PARA CONTROL INTERNO</return>
+    <return>idErp APLICA SOLO CUANDO LA EMPRESA ENVÍA EL ID DEL ERP QUE IDENTIFICA LA FACTURA, Y DEVUELVE DICHO VALOR, DE LO CONTRARIO DEVUELVE CERO</return>
+    <return>prefijo PREFIJO DEL DOCUMENTO ELECTRÓNICO</return>
+    <return>selloDeValidacion FIRMA DE VALIDACIÓN POR PARTE DE LA DIAN, SE DEVUELVE PARA CONTROL INTERNO DEL CLIENTE</return>
+    <return>tipoDocumento TIPO DE DOCUMENTO ELECTRÓNICO</return>
+  </function>
+  <function name="f_MensajesProceso_Conteo">
+    <api_synopsis> Conteo MensajesProceso</api_synopsis>
+    <api_usage> Total de mensajes que entrego la petición</api_usage>
+    <api_usage>
+      <pre> CALL f_MensajesProceso_Conteo()
+ RETURNING conteoMensaje</pre>
+    </api_usage>
+    <return>MensajesConteo Total de mensajes que entrego la petición</return>
+  </function>
+  <function name="f_MensajesProceso_Recupera">
+    <api_synopsis> Recupera MensajesProceso</api_synopsis>
+    <api_usage> Especifica el código del mensaje y una descripción relacionada al código de respuesta</api_usage>
+    <api_usage>
+      <pre> CALL f_MensajesProceso_Recupera(1)
+ RETURNING
+     codigoMensaje
+    ,descripcionMensaje
+    ,rechazoNotificacion</pre>
+    </api_usage>
+    <return>codigoMensaje IDENTIFICADOR DEL MENSAJE</return>
+    <return>descripcionMensaje CAMPO QUE DESCRIBE LOS MENSAJES DE ERROR ASOCIADOS AL DOCUMENTO</return>
+    <return>rechazoNotificacion CAMPO QUE DESCRIBE SI LA VALIDACIÓN ES DE TIPO RECHAZO (R) O NOTIFICACIÓN (N)</return>
+    <api_param name="indice" type="INTEGER">indice del mensaje que se desea recuperar</api_param>
+  </function>
+  <function name="f_CabezaDocumento_Agrega">
+    <api_synopsis> Agregar CabezaDocumento</api_synopsis>
+    <api_usage> Agregar CabezaDocumento</api_usage>
+    <api_usage>
+      <pre> CALL f_CabezaDocumento_Agrega(
+     "Texto"--aplicafel
+    ,123--cantidadLineas
+    ,"Texto"--centroCostos
+    ,123--codigoPlantillaPdf
+    ,"Texto"--codigovendedor
+    ,123456789--consecutivo
+    ,"Texto"--contrasenia
+    ,"Texto"--descripcionCentroCostos
+    ,"2020-03-24 10:15"--fechafacturacion
+    ,123456789--idEmpresa
+    ,"Texto"--idErp
+    ,"Texto"--incoterm
+    ,"Texto"--nombrevendedor
+    ,"Texto"--prefijo
+    ,"Texto"--sucursal
+    ,"Texto"--tipoOperacion
+    ,"Texto"--tipodocumento
+    ,"Texto"--tiponota
+    ,"Texto"--token
+    ,"Texto"--usuario
+    ,"Texto"--version
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="aplicafel" type="VARCHAR(2)">(OBLIGATORIO) APLICA FACTURA ELECTRÓNICA A ESTE CLIENTE. VALORES POSIBLES (SI, NO). ESTA VARIABLE PERMITE EL ENVIO O NO DEL DOCUMENTO POR EMAIL AL COMPRADOR O ADQUIRENTE</api_param>
+    <api_param name="cantidadLineas" type="INTEGER">(OBLIGATORIO) VERIFICA EL NUMERO DE LOS DETALLES, ESTE ES UN CONTROL DE LA DIAN PARA COMPROBAR QUE LOS SERVICIOS Y PRODUCTOS VAN COMPLETOS</api_param>
+    <api_param name="centroCostos" type="VARCHAR(100)">CENTRO DE COSTOS AL QUE SE DEBE ASOCIAR LA FACTURA</api_param>
+    <api_param name="codigoPlantillaPdf" type="INTEGER">(OBLIGATORIO) CODIGO DEL FORMATO DEL DOCUMENTO ELECTRÓNICO A IMPLEMENTAR. APLICA SOLO SI LA EMPRESA MANEJA MAS DE UN FORMATO PARA FACTURAS Y NOTAS. CUANDO EL VALOR ES CERO (0), INDICA QUE NO SE REQUIERE CREAR REPRESENTACIÓN GRÁFICA</api_param>
+    <api_param name="codigovendedor" type="VARCHAR(50)">CODIGO O IDENTIFICACIÓN DEL VENDEDOR</api_param>
+    <api_param name="consecutivo" type="BIGINT">(OBLIGATORIO) CONSECUTIVO ENTREGADO EN LA RESOLUCIÓN DE LA DIAN O NÚMERO DE FACTURA</api_param>
+    <api_param name="contrasenia" type="VARCHAR(40)">(OBLIGATORIO) CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA</api_param>
+    <api_param name="descripcionCentroCostos" type="VARCHAR(240)">DESCRIPCIÓN DEL CENTRO DE COSTOS</api_param>
+    <api_param name="fechafacturacion" type="DATETIME YEAR TO FRACTION(5)">(OBLIGATORIO) FECHA Y HORA EN LA QUE SE FACTURÓ EN FORMATO YYYY-MM-DD HH:mm:ss</api_param>
+    <api_param name="idEmpresa" type="BIGINT">(OBLIGATORIO) CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA</api_param>
+    <api_param name="idErp" type="VARCHAR(40)">ID DEL ERP PARA ASOCIARLO A LA FACTURA</api_param>
+    <api_param name="incoterm" type="VARCHAR(3)">(OBLIGATORIO) OBLIGATORIO PARA FACTURAS DE EXPORTACIÓN. VER TABLA INCOTERM</api_param>
+    <api_param name="nombrevendedor" type="VARCHAR(50)">NOMBRE DEL VENDEDOR</api_param>
+    <api_param name="prefijo" type="VARCHAR(5)">PREFIJO DE DOCUMENTO, SOLO SI LA EMPRESA LO MANEJA</api_param>
+    <api_param name="sucursal" type="VARCHAR(50)">SUCURSAL DE LA EMPRESA</api_param>
+    <api_param name="tipoOperacion" type="VARCHAR(2)">(OBLIGATORIO) VER EN LA SECCION TABLAS: TIPOS DE OPERACIÓN</api_param>
+    <api_param name="tipodocumento" type="VARCHAR(1)">(OBLIGATORIO) TIPO DE DOCUMENTO --1. FACTURA DE VENTA, 2. NOTA CRÉDITO, 3. NOTA DÉBITO 4. FACTURA DE EXPORTACIÓN, 5. FACTURA DE CONTINGENCIA, 6. FACTURA DE IMPORTACIÓN.</api_param>
+    <api_param name="tiponota" type="VARCHAR(2)">(OBLIGATORIO) NOTA CRÉDITO: 1. DEVOLUCIÓN DE PARTE DE LOS BIENES 2. ANULACIÓN DE FACTURA 3. REBAJA TOTAL APLICADA 4. DESCUENTO TOTAL APLICADO 5. RESCISIÓN: NULIDAD POR FALTA DE REQUISITOS 6. OTROS. NOTA DEBITO: 7. INTERESES 8. GASTOS POR COBRAR 9. CAMBIO DEL VALOR 10. OTROS</api_param>
+    <api_param name="token" type="VARCHAR(40)">(OBLIGATORIO) CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA</api_param>
+    <api_param name="usuario" type="VARCHAR(40)">(OBLIGATORIO) CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA</api_param>
+    <api_param name="version" type="VARCHAR(40)">(OBLIGATORIO) VERSIÓN DEL MANUAL CON LA QUE EL CLIENTE TRABAJÓ LA INTEGRACIÓN</api_param>
+  </function>
+  <function name="f_Pagos_Agrega">
+    <api_synopsis> Agregar Pagos</api_synopsis>
+    <api_usage> ESTRUCTURA QUE ALMACENA LA INFORMACIÓN DEL PAGO</api_usage>
+    <api_usage>
+      <pre> CALL f_Pagos_Agrega(
+     "Texto"--codigoMonedaCambio
+    ,"2020-03-24 10:15"--fechaTasaCambio
+    ,"2020-03-24 10:15"--fechavencimiento
+    ,"Texto"--moneda
+    ,123.12--pagoanticipado
+    ,123--periododepagoa
+    ,123--tipocompra
+    ,123.12--totalCargos
+    ,123.12--totalDescuento
+    ,123.12--totalbaseconimpuestos
+    ,123.12--totalbaseimponible
+    ,123.12--totalfactura
+    ,123.12--totalimportebruto
+    ,123.12--trm
+    ,123.12--trm_alterna
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="codigoMonedaCambio" type="VARCHAR(3)">(OBLIGATORIO) MONEDA EN LA QUE SE CONVIERTE CON LA TRM EN ESTÁNDAR ISO 4217, ESTE VALOR SIEMPRE DEBE SER COP</api_param>
+    <api_param name="fechaTasaCambio" type="DATETIME YEAR TO FRACTION(5)">OBLIGATORIO PARA FACTURAS DE EXPORTACIÓN O NACIONALES EN OTRA MONEDA. FECHA CON LA QUE SE FIJA LA TASA DE CAMBIO. CAMPO NUEVO</api_param>
+    <api_param name="fechavencimiento" type="DATETIME YEAR TO FRACTION(5)">APLICA PARA VENTAS A CREDITO tipocompra=2, INFORMA LA FECHA LIMITE EN QUE SE DEBE PAGAR LA FACTURA DE ACUERDO A LO ACORDADO EN EL PERDIODO DE PAGO. ESTE CAMPO ES OBLIGATORIO SI tipocompra=2</api_param>
+    <api_param name="moneda" type="VARCHAR(3)">(OBLIGATORIO) MONEDA EN LA QUE SE NEGOCIA EN ESTÁNDAR ISO 4217</api_param>
+    <api_param name="pagoanticipado" type="FLOAT">CONSOLIDADO DE TODOS LOS ANTICIPOS DE LA FACTURA. ESTE VALOR SALE DE LA SUMATORIA DE TODOS LOS ANTICIPOS EN LA LISTA DE ANTICIPOS A NIVEL GLOBAL</api_param>
+    <api_param name="periododepagoa" type="INTEGER">ESTE CAMPO INDICA EL NÚMERO DE DIAS EN QUE SE PAGARA LA COMPRA CUANDO ES A CREDITO, ES DECIR tipocompra=2. ESTE CAMPO ES OBLIGATORIO SI tipocompra=2</api_param>
+    <api_param name="tipocompra" type="INTEGER">(OBLIGATORIO) ESTE CAMPO INDICA SI LA COMPRA ES 1. DE CONTADO O 2. A CRÉDITO</api_param>
+    <api_param name="totalCargos" type="FLOAT">CONSOLIDADO DEL TOTAL DE LOS CARGOS APLICADOS. EL VALOR SALE DE LA SUMATORIA DEL VALORCARGO DE LA LISTA DE CARGOS A NIVEL GLOBAL.</api_param>
+    <api_param name="totalDescuento" type="FLOAT">CONSOLIDADO DEL TOTAL DE LOS DESCUENTOS APLICADOS. EL VALOR SALE DE LA SUMATORIA DEL VALOR DESCUENTO DE LA LISTA DE DESCUENTOS A NIVEL GLOBAL.</api_param>
+    <api_param name="totalbaseconimpuestos" type="FLOAT">(OBLIGATORIO) ES EL TOTAL IMPORTE BRUTO MAS LA SUMATORIA DE TODOS LOS VALORES DE IMPUESTOS A NIVEL DE DETALLE. NO APLICA PARA CODIGOS DE RETENCIÓN. Totalimportebruto + ? valorImpuestoRetencion(NIVEL DETALLE)</api_param>
+    <api_param name="totalbaseimponible" type="FLOAT">(OBLIGATORIO) ES LA SUMATORIA DE TODAS LAS BASES IMPONIBLES EN LA LISTA DE IMPUESTOS ASOCIADAS AL DETALLE DE LA FACTURA, QUE APLICAN COMO IMPUESTOS Y NO COMO RETENCIONES.</api_param>
+    <api_param name="totalfactura" type="FLOAT">(OBLIGATORIO) ES LA BASE CON IMPUESTOS, MAS CARGOS, MENOS DESCUENTOS, MENOS ANTICIPOS, TODO A NIVEL GLOBAL. Totalbaseconimpuestos+ totalCargos- totalDescuento- pagoanticipado</api_param>
+    <api_param name="totalimportebruto" type="FLOAT">(OBLIGATORIO) SUMATORIA DE TODOS LOS PRECIOS SIN IMPUESTO DE LAS LÍNEAS DE DETALLE DE LA FACTURA.</api_param>
+    <api_param name="trm" type="FLOAT">SE HACE OBLIGATORIO PARA FACTURAS DE EXPORTACIÓN O NACIONALES EN OTRA MONEDA</api_param>
+    <api_param name="trm_alterna" type="FLOAT">APLICA PARA FACTURAS DE EXPORTACIÓN O NACIONALES EN OTRA MONEDA</api_param>
+  </function>
+  <function name="f_OrdenCompra_Agrega">
+    <api_synopsis> Agregar OrdenCompra</api_synopsis>
+    <api_usage> CONTIENE UN LISTADO DE LAS ORDENES DE COMPRAS ASOCIADAS A UNA FACTURA. UNA OPCIÓN ES MANEJAR LA INICIAL SEPARANDO TODO POR PUNTO Y COMA “;”</api_usage>
+    <api_usage>
+      <pre> CALL f_OrdenCompra_Agrega(
+     "2020-03-24 10:15"--fechaemisionordencompra
+    ,"Texto"--numeroaceptacioninterno
+    ,"Texto"--ordencompra
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="fechaemisionordencompra" type="DATETIME YEAR TO FRACTION(5)">FECHA DE CREACIÓN DE LA ORDEN DE COMPRA</api_param>
+    <api_param name="numeroaceptacioninterno" type="VARCHAR(40)">NUMERO DE ACEPTACIÓN, CODIGO INTERNO DEL COMPRADOR</api_param>
+    <api_param name="ordencompra" type="VARCHAR(40)">ORDEN DE COMPRA ASOCIADA A LA FACTURA</api_param>
+  </function>
+  <function name="f_MedioPago_Agrega">
+    <api_synopsis> Agregar MedioPago</api_synopsis>
+    <api_usage> LISTADO DE LOS MEDIOS DE PAGO.</api_usage>
+    <api_usage>
+      <pre> CALL f_MedioPago_Agrega(
+     "Texto"--medioPago
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="medioPago" type="VARCHAR(2)">(OBLIGATORIO) LISTADO DE LOS MEDIOS DE PAGO.</api_param>
+  </function>
+  <function name="f_Impuesto_Agrega">
+    <api_synopsis> Agregar Impuesto</api_synopsis>
+    <api_usage> LISTA DE LOS IMPUESTOS Y/O RETENCIONES ASOCIADOS AL DETALLE. SI EL PRODUCTO O SERVICIO ES EXCLUIDO NO SE HACE OBLIGATORIO ESTE VALOR.</api_usage>
+    <api_usage>
+      <pre> CALL f_Impuesto_Agrega(
+     123.12--baseimponible
+    ,"Texto"--codigoImpuestoRetencion
+    ,NULL--isAutoRetenido
+    ,123.12--porcentaje
+    ,123.12--valorImpuestoRetencion
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="baseimponible" type="FLOAT">(OBLIGATORIO) BASE IMPONIBLE SOBRE LA QUE SE CALCULA LA RETENCIÓN O IMPUESTO. TENER EN CUENTA QUE ESTE VALOR DEBE TENER DESCUENTOS INCLUIDOS</api_param>
+    <api_param name="codigoImpuestoRetencion" type="VARCHAR(2)">(OBLIGATORIO) CÓDIGO DEL IMPUESTO O RETENCIÓN. VER NUEVA TABLA DE IMPUESTOS EN LA SECCIÓN TABLAS.</api_param>
+    <api_param name="isAutoRetenido" type="BOOLEAN">(OBLIGATORIO) INDICA SI LO QUE SE REPORTA ES IMPUESTO O RETENCIÓN. VALORES POSIBLES: TRUE (ES RETENCIÓN), FALSE (ES IMPUESTO)</api_param>
+    <api_param name="porcentaje" type="FLOAT">(OBLIGATORIO) PORCENTAJE DE IMPUESTO O RETENCIÓN A APLICAR</api_param>
+    <api_param name="valorImpuestoRetencion" type="FLOAT">(OBLIGATORIO) VALOR DEL IMPUESTO O RETENCIÓN A APLICAR</api_param>
+  </function>
+  <function name="f_FacturaModificada_Agrega">
+    <api_synopsis> Agregar FacturaModificada</api_synopsis>
+    <api_usage> LISTA DE LAS FACTURAS ASOCIADAS A UNA NOTA. ESTE VALOR SE HACE OBLIGATORIO CUANDO EL TIPO DOCUMENTO ES UNA NOTA CRÉDITO O DEBITO</api_usage>
+    <api_usage>
+      <pre> CALL f_FacturaModificada_Agrega(
+     "Texto"--consecutivoFacturaModificada
+    ,"Texto"--cufeFacturaModificada
+    ,"2020-03-24 10:15"--fechaFacturaModificada
+    ,"Texto"--observacion
+    ,"Texto"--prefijoFacturaModificada
+    ,"Texto"--tipoDocumentoFacturaModificada
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="consecutivoFacturaModificada" type="STRING">(OBLIGATORIO) CONSECUTIVO DE LA FACTURA A MODIFICAR. ESTE CAMPO SOLO APLICA PARA LAS NOTAS DÉBITO Y/O CRÉDITO. EJ: 564231</api_param>
+    <api_param name="cufeFacturaModificada" type="STRING"/>
+    <api_param name="fechaFacturaModificada" type="DATETIME YEAR TO FRACTION(5)"/>
+    <api_param name="observacion" type="STRING"/>
+    <api_param name="prefijoFacturaModificada" type="VARCHAR(5)">(OBLIGATORIO) VALOR NECESARIO PARA PODER ENCONTRAR EL CUFE DE LA FACTURA A AFECTAR. EJ: FACT</api_param>
+    <api_param name="tipoDocumentoFacturaModificada" type="VARCHAR(1)">(OBLIGATORIO) VALOR NECESARIO PARA PODER ENCONTRAR EL CUFE DE LA FACTURA A AFECTAR.</api_param>
+  </function>
+  <function name="f_DocumentoAdjunto_Agrega">
+    <api_synopsis> Agregar DocumentoAdjunto</api_synopsis>
+    <api_usage> LISTA DE DOCUMENTOS ADJUNTOS QUE SE ENVÍAN POR EL WEB SERVICE</api_usage>
+    <api_usage>
+      <pre> CALL f_DocumentoAdjunto_Agrega(
+     NULL--contenidoDelDoc
+    ,"Texto"--nombreConExtension
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="ArchivoRuta" type="STRING">CONTENIDO DEL ARCHIVO EN BASE 64. ESTE CAMPO CONTIENE UN ARREGLO DE BYTE’S QUE REPRESENTA EL DOCUMENTO ADJUNTO QUE POSTERIORMENTE SE PASA POR UN BASE 64.</api_param>
+    <api_param name="nombreConExtension" type="VARCHAR(240)">NOMBRE DEL ARCHIVO A ADJUNTAR</api_param>
+  </function>
+  <function name="f_DetalleDocumento_Agrega">
+    <api_synopsis> Agregar DetalleDocumento</api_synopsis>
+    <api_usage> LISTA QUE ALMACENA LOS DETALLES DE PRODUCTOS Y/O SERVICIOS</api_usage>
+    <api_usage>
+      <pre> CALL f_DetalleDocumento_Agrega(
+     "Texto"--aplicaMandato
+    ,"Texto"--campoAdicional1
+    ,"Texto"--campoAdicional2
+    ,"Texto"--campoAdicional3
+    ,"Texto"--campoAdicional4
+    ,"Texto"--campoAdicional5
+    ,123.12--cantidad
+    ,"Texto"--codigoproducto
+    ,"Texto"--descripcion
+    ,"Texto"--familia
+    ,"2020-03-24 10:15"--fechaSuscripcionContrato
+    ,"Texto"--gramaje
+    ,"Texto"--grupo
+    ,"Texto"--marca
+    ,"Texto"--modelo
+    ,123--muestracomercial
+    ,123--muestracomercialcodigo
+    ,"Texto"--nombreProducto
+    ,123--posicion
+    ,123.12--preciosinimpuestos
+    ,123.12--preciototal
+    ,"Texto"--referencia
+    ,"Texto"--seriales
+    ,123.12--tamanio
+    ,123--tipoImpuesto
+    ,"Texto"--tipocodigoproducto
+    ,"Texto"--unidadmedida
+    ,123.12--valorunitario
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="aplicaMandato" type="VARCHAR(2)">INDICA SI EL PRODUCTO O SERVICIO MANEJA MANDATO O NO. LOS VALORES SON ‘SI’ O ‘NO’</api_param>
+    <api_param name="campoAdicional1" type="STRING"/>
+    <api_param name="campoAdicional2" type="STRING"/>
+    <api_param name="campoAdicional3" type="STRING"/>
+    <api_param name="campoAdicional4" type="STRING"/>
+    <api_param name="campoAdicional5" type="STRING"/>
+    <api_param name="cantidad" type="FLOAT">(OBLIGATORIO) CANTIDAD DEL PRODUCTO, POR DEFECTO DEBE ENVIARSE EL VALOR UNO “1”, EL VALOR DEBE SER SIEMPRE MAYOR A CERO</api_param>
+    <api_param name="codigoproducto" type="VARCHAR(30)">(OBLIGATORIO) CÓDIGO DEL PRODUCTO O SERVICIO</api_param>
+    <api_param name="descripcion" type="VARCHAR(240)">INFORMACIÓN DESCRIPTIVA DEL PRODUCTO</api_param>
+    <api_param name="familia" type="VARCHAR(240)">FAMILIA AL QUE PERTENECE EL PRODUCTO</api_param>
+    <api_param name="fechaSuscripcionContrato" type="DATETIME YEAR TO FRACTION(5)"/>
+    <api_param name="gramaje" type="VARCHAR(800)">PESO EN GRAMOS</api_param>
+    <api_param name="grupo" type="VARCHAR(240)">GRUPO AL QUE PERTENECE EL PRODUCTO</api_param>
+    <api_param name="marca" type="VARCHAR(240)">MARCA DEL PRODUCTO</api_param>
+    <api_param name="modelo" type="VARCHAR(240)">MODELO DEL PRODUCTO</api_param>
+    <api_param name="muestracomercial" type="INTEGER">INDICA SI ES UNA MUESTRA COMERCIAL O UN REGALO. LOS VALORES SON “MUESTRA=1, REGALO=2”. ESTE CAMPO ES OBLIGATORIO SI EL CLIENTE MANEJA REGALOS A NIVEL DE DETALLE. INDEPENDIENTE DE LA OPCION QUE SE ESCOJA, SIEMPRE SE DEBE ENVIAR EL VALOR COMERCIAL DEL PRODUCTO, AUNQUE ESTE NO SUMA AL VALOR TOTAL DE LA FACTURA.</api_param>
+    <api_param name="muestracomercialcodigo" type="INTEGER">ESTE CAMPO ES OBLIGATORIO SI HAY MUESTRA COMERCIAL. LOS CODIGOS ACEPTADOS SON: 1. VALOR COMERCIAL, 2. VALOR EN INVENTARIOS, 3. OTRO VALOR</api_param>
+    <api_param name="nombreProducto" type="VARCHAR(240)">(OBLIGATORIO) NOMBRE DEL PRODUCTO O SERVICIO</api_param>
+    <api_param name="posicion" type="INTEGER">VALOR PARA RESPETAR EL ORDEN ASIGNADO POR EL ERP</api_param>
+    <api_param name="preciosinimpuestos" type="FLOAT">(OBLIGATORIO) VALOR SIN IMPUESTOS. (CANTIDAD X VALOR UNITARIO – DESCUENTO +CARGOS)</api_param>
+    <api_param name="preciototal" type="FLOAT">(OBLIGATORIO)VALOR TOTAL A PAGAR POR EL/LOS PRODUCTOS POR LA LÍNEA DE DETALLE. FORMULA (CANTIDAD X VALOR UNITARIO – DESCUENTO +CARGOS) +IMPUESTOS.</api_param>
+    <api_param name="referencia" type="VARCHAR(100)">REFERENCIA O GRUPO DEL PRODUCTO</api_param>
+    <api_param name="seriales" type="VARCHAR(800)">SERIALES REGISTRADOS</api_param>
+    <api_param name="tamanio" type="FLOAT">TAMAÑO</api_param>
+    <api_param name="tipoImpuesto" type="INTEGER">(OBLIGATORIO) GRAVADO=1, EXCLUIDO=2, EXENTO=3. SI NO SE ENVÍA POR DEFECTO SE CARGARÁ EL VALOR COMO GRAVADO</api_param>
+    <api_param name="tipocodigoproducto" type="VARCHAR(30)">(OBLIGATORIO) INDICA QUE CÓDIGO DEL ESTÁNDAR DEL PRODUCTO. 001: COLOMBIA COMPRA EFICIENTE. 010: NÚMEROS GLOBALES DE IDENTIFICACIÓN DE PRODUCTOS – GTIN. 020: PARTIDA ARANCELARIA. 999: ESTÁNDAR DE ADOPCIÓN DEL CONTRIBUYENTE</api_param>
+    <api_param name="unidadmedida" type="VARCHAR(5)">(OBLIGATORIO) UNIDAD DE MEDIDA QUE MANEJA EL FACTURADOR. SE DEBE USAR LOS VALORES DESCRITOS EN LA TABLA 6.3.6. DEL DOCUMENTO ADJUNTO ANEXO%20TÉCNICO%20DE%20FACTURA%20ELECTRÓNICA.PDF.</api_param>
+    <api_param name="valorunitario" type="FLOAT">(OBLIGATORIO) VALOR UNITARIO DEL PRODUCTO O SERVICIO. ES EL VALOR COMERCIAL DEL PRODUCTO SIN APLICAR IMPUESTOS NI DESCUENTOS. EL VALOR DEBE SER MAYOR A CERO.</api_param>
+  </function>
+  <function name="f_Mandante_Detalle_Agrega">
+    <api_synopsis> Agregar Mandante_Detalle</api_synopsis>
+    <api_usage> LISTA DE LOS MANDANTES ASOCIADOS A LA FACTURA. APLICA SOLO SI EL CAMPO aplicaMandato ES IGUAL A SI</api_usage>
+    <api_usage>
+      <pre> CALL f_Mandante_Detalle_Agrega(
+     "Texto"--ciudad
+    ,"Texto"--departamento
+    ,"Texto"--descripcionContrato
+    ,"Texto"--digitoVerificacion
+    ,"Texto"--direccion
+    ,"Texto"--identificacionMandante
+    ,"Texto"--nombreMandante
+    ,"Texto"--numeroContrato
+    ,"Texto"--pais
+    ,"Texto"--tipoContrato
+    ,"Texto"--tipoEstablecimiento
+    ,"Texto"--tipoIdentificacionMandante
+    ,"Texto"--tipoObligacion
+    ,"Texto"--tipoPersona
+    ,"Texto"--tipoRepresentacion
+    ,"Texto"--zonaPostal
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="ciudad" type="VARCHAR(100)">CIUDAD DE RESIDENCIA DEL CLIENTE. EL CAMPO CIUDAD DEBE RECIBIR EL CODIGO DEL MUNICIPIO SEGÚN TABLA DEL DANE. VER TABLA ANEXA SUB-REGIONES DANE</api_param>
+    <api_param name="departamento" type="VARCHAR(100)">DEPARTAMENTO DE RESIDENCIA DEL CLIENTE. EL CAMPO DEPARTAMENTO DEBE RECIBIR EL CODIGO DEL MUNICIPIO SEGÚN TABLA DEL DANE. VER TABLA ANEXA SUB-REGIONES DANE</api_param>
+    <api_param name="descripcionContrato" type="VARCHAR(240)">DESCRIPCIÓN DEL CONTRATO DE MANDATO</api_param>
+    <api_param name="digitoVerificacion" type="VARCHAR(2)">(OBLIGATORIO) SI LA FACTURA MANEJA MANDANTE, SE DEBE AGREGAR ESTE VALOR DE MANERA OBLIGATORIA. OBLIGATORIO SOLO SI TIPO IDENTIFICACIÓN ES NIT</api_param>
+    <api_param name="direccion" type="VARCHAR(100)">DIRECCIÓN MANDANTE</api_param>
+    <api_param name="identificacionMandante" type="VARCHAR(3)">(OBLIGATORIO) IDENTIFICACIÓN MANDANTE</api_param>
+    <api_param name="nombreMandante" type="VARCHAR(200)">NOMBRE DEL MANDANTE</api_param>
+    <api_param name="numeroContrato" type="VARCHAR(100)">NUMERO DE CONTRATO DE MANDATO</api_param>
+    <api_param name="pais" type="VARCHAR(2)">PAIS CLIENTE EN ESTÁNDAR ISO 3116-1, ES DECIR COLOMBIA "CO"</api_param>
+    <api_param name="tipoContrato" type="VARCHAR(100)">TIPO DE CONTRATO DE MANDATO</api_param>
+    <api_param name="tipoEstablecimiento" type="VARCHAR(20)">TIPO DE ESTABLECIMIENTO</api_param>
+    <api_param name="tipoIdentificacionMandante" type="STRING">(OBLIGATORIO) VER EN LA SECCION DE TABLAS -&gt; TIPO DE DOCUMENTO DE IDENTIFICACIÓN</api_param>
+    <api_param name="tipoObligacion" type="VARCHAR(30)">CODIGO DE LA OBLIGACIÓN CUANDO EL TIPO DE IDENTIFICACIÓN ES NIT. VER TABLA RESPONSABILIDADES FISCALES. SI LA EMPRESA TIENE MAS DE UN TIPO DE OBLIGACIÓN, DEBERÁN IR SEPARADOS POR PUNTO Y COMA “;”</api_param>
+    <api_param name="tipoPersona" type="VARCHAR(1)">TIPO DE PERSONA, 1. PERSONA JURÍDICA, 2. PERSONA NATURAL</api_param>
+    <api_param name="tipoRepresentacion" type="VARCHAR(20)">PENDIENTE DEFINICIÓN DIAN</api_param>
+    <api_param name="zonaPostal" type="VARCHAR(30)">CODIGO POSTAL</api_param>
+  </function>
+  <function name="f_Impuesto_Detalle_Agrega">
+    <api_synopsis> Agregar Impuesto_Detalle</api_synopsis>
+    <api_usage> LISTA DE LOS IMPUESTOS Y/O RETENCIONES ASOCIADOS AL DETALLE. SI EL PRODUCTO O SERVICIO ES EXCLUIDO NO SE HACE OBLIGATORIO ESTE VALOR.</api_usage>
+    <api_usage>
+      <pre> CALL f_Impuesto_Detalle_Agrega(
+     123.12--baseimponible
+    ,"Texto"--codigoImpuestoRetencion
+    ,NULL--isAutoRetenido
+    ,123.12--porcentaje
+    ,123.12--valorImpuestoRetencion
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="baseimponible" type="FLOAT">(OBLIGATORIO) BASE IMPONIBLE SOBRE LA QUE SE CALCULA LA RETENCIÓN O IMPUESTO. TENER EN CUENTA QUE ESTE VALOR DEBE TENER DESCUENTOS INCLUIDOS</api_param>
+    <api_param name="codigoImpuestoRetencion" type="VARCHAR(2)">(OBLIGATORIO) CÓDIGO DEL IMPUESTO O RETENCIÓN. VER NUEVA TABLA DE IMPUESTOS EN LA SECCIÓN TABLAS.</api_param>
+    <api_param name="isAutoRetenido" type="BOOLEAN">(OBLIGATORIO) INDICA SI LO QUE SE REPORTA ES IMPUESTO O RETENCIÓN. VALORES POSIBLES: TRUE (ES RETENCIÓN), FALSE (ES IMPUESTO)</api_param>
+    <api_param name="porcentaje" type="FLOAT">(OBLIGATORIO) PORCENTAJE DE IMPUESTO O RETENCIÓN A APLICAR</api_param>
+    <api_param name="valorImpuestoRetencion" type="FLOAT">(OBLIGATORIO) VALOR DEL IMPUESTO O RETENCIÓN A APLICAR</api_param>
+  </function>
+  <function name="f_Descuento_Detalle_Agrega">
+    <api_synopsis> Agregar Descuento_Detalle</api_synopsis>
+    <api_usage> LISTA DE DESCUENTOS ASOCIADOS AL PRODUCTO POR LÍNEA DE DETALLE</api_usage>
+    <api_usage>
+      <pre> CALL f_Descuento_Detalle_Agrega(
+     "Texto"--codigoDescuento
+    ,"Texto"--descripcion
+    ,123.12--descuento
+    ,123.12--porcentajeDescuento
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="codigoDescuento" type="VARCHAR(2)">CÓDIGO QUE IDENTIFICA EL TIPO DE DESCUENTO</api_param>
+    <api_param name="descripcion" type="VARCHAR(240)">DESCRIPCIÓN DEL DESCUENTO</api_param>
+    <api_param name="descuento" type="FLOAT">(OBLIGATORIO) VALOR DEL DESCUENTO</api_param>
+    <api_param name="porcentajeDescuento" type="FLOAT">(OBLIGATORIO) PORCENTAJE DEL DESCUENTO</api_param>
+  </function>
+  <function name="f_CodigoBarra_Detalle_Agrega">
+    <api_synopsis> Agregar CodigoBarra_Detalle</api_synopsis>
+    <api_usage> LISTA TODOS LOS CÓDIGOS DE BARRA ASOCIADOS A UN PRODUCTO</api_usage>
+    <api_usage>
+      <pre> CALL f_CodigoBarra_Detalle_Agrega(
+     "Texto"--cadenaACodificar
+    ,"Texto"--descripcion
+    ,"2020-03-24 10:15"--fecha
+    ,123--orden
+    ,"Texto"--tipoCodificacion
+    ,"Texto"--tipoModelo
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="cadenaACodificar" type="VARCHAR(255)">(OBLIGATORIO) CADENA PARA LA GENERACIÓN DEL CÓDIGO DE BARRAS, VER LAS ESPECIFICACIONES PARA EL ENVÍO DEL CÓDIGO DE BARRAS DE RECAUDO. SI LA LISTA DE CODIGO DE BARRAS TIENE MAS DE UN ITEM ESTE VALOR SE HACE OBLIGATORIO PARA EL PT.</api_param>
+    <api_param name="descripcion" type="VARCHAR(255)">NOTA ASOCIADA AL CÓDIGO DE BARRAS</api_param>
+    <api_param name="fecha" type="DATETIME YEAR TO FRACTION(5)">FECHA DE REFERENCIA ASOCIADA AL CAMPO NECESARIO PARA MOSTRAR EN LA REPRESENTACIÓNGRÁFICA</api_param>
+    <api_param name="orden" type="INTEGER">ORDEN EN EL QUE SE MOSTRARÁ CADA CÓDIGO EN LA REPRESENTACIÓN GRÁFICA</api_param>
+    <api_param name="tipoCodificacion" type="VARCHAR(255)">INDICA SI ES EAN, UPC U OTRA VERSIÓN. POR DEFECTO SE USARÁ EL EAN128</api_param>
+    <api_param name="tipoModelo" type="VARCHAR(255)">(OBLIGATORIO) MODELO DE CÓDIGO QUE SE IMPLEMENTARÁ AL INTERIOR DE DISPAPELES. DISPAPELES INDICARÁ ESTE VALOR PARA QUE SEA ENVIADO POR EL FACTURADOR DE ACUERDO CON SU NECESIDAD. SI LA LISTA DE CODIGO DE BARRAS TIENE MAS DE UN ITEM ESTE VALOR SE HACE OBLIGATORIO PARA EL PT.</api_param>
+  </function>
+  <function name="f_Cargo_Detalle_Agrega">
+    <api_synopsis> Agregar Cargo_Detalle</api_synopsis>
+    <api_usage> LISTADO DE CARGOS ASOCIADOS A LA FACTURA</api_usage>
+    <api_usage>
+      <pre> CALL f_Cargo_Detalle_Agrega(
+     "Texto"--codigoCargo
+    ,"Texto"--descripcion
+    ,123.12--porcentajeCargo
+    ,123.12--valorCargo
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="codigoCargo" type="VARCHAR(2)">CÓDIGO INTERNO QUE MANEJA LA EMPRESA PARA ESE CARGO. AÚN LA DIAN NO DEFINE CODIGOS ESTÁNDAR</api_param>
+    <api_param name="descripcion" type="VARCHAR(240)">DESCRIPCIÓN DEL CARGO APLICADO A LA FACTURA</api_param>
+    <api_param name="porcentajeCargo" type="FLOAT">PORCENTAJE DEL CARGO</api_param>
+    <api_param name="valorCargo" type="FLOAT">(OBLIGATORIO) INDICA SI ES UN CARGO O UN DESCUENTO APLICADO A LA FACTURA</api_param>
+  </function>
+  <function name="f_CampoAdicional_Detalle_Agrega">
+    <api_synopsis> Agregar CampoAdicional_Detalle</api_synopsis>
+    <api_usage> LISTA QUE ALMACENA UNO O VARIOS ELEMENTOS CON ASOCIACIÓN CAMPO VALOR PARA MANEJAR CAMPOS NO TENIDOS EN CUENTA EN EL ESTÁNDAR UBL2.1 DEFINIDO POR LA DIAN. ESTE CAMPO HACE PARTE DE LOS CAMBIOS POR EL NUEVO MODELO.</api_usage>
+    <api_usage>
+      <pre> CALL f_CampoAdicional_Detalle_Agrega(
+     "2020-03-24 10:15"--fecha
+    ,"Texto"--nombreCampo
+    ,123--orden
+    ,123--seccion
+    ,"Texto"--valorCampo
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="fecha" type="DATETIME YEAR TO FRACTION(5)">FECHA DE REFERENCIA ASOCIADA AL CAMPO NECESARIO PARA MOSTRAR EN LA REPRESENTACIÓN GRÁFICA</api_param>
+    <api_param name="nombreCampo" type="VARCHAR(50)">DESCRIPCION DEL VALOR ALMACENADO. PARA EL MANEJO DE LAS NOTAS DE LA DIAN, COLOCAR EL CONCEPTO DESCRIPCION</api_param>
+    <api_param name="orden" type="INTEGER">ORDEN EN EL QUE SE PRESENTARÁ LA INFORMACIÓN, DA UNA JERARQUIA AL MOMENTO DE PINTAR EL DATO</api_param>
+    <api_param name="seccion" type="INTEGER">GRUPO DE DATOS ADICIONALES QUE SIRVE PARA SABER UNA DETERMINADA POSICIÓN EN LA QUE SE QUIERA REPRESENTAR LA INFORMACIÓN EN EL PDF</api_param>
+    <api_param name="valorCampo" type="VARCHAR(800)">VALOR DEL CAMPO ADICIONAL INDICADO</api_param>
+  </function>
+  <function name="f_Descuento_Agrega">
+    <api_synopsis> Agregar Descuento</api_synopsis>
+    <api_usage> LISTADO DE DESCUENTOS ASOCIADOS A LA FACTURA</api_usage>
+    <api_usage>
+      <pre> CALL f_Descuento_Agrega(
+     "Texto"--codigoDescuento
+    ,"Texto"--descripcion
+    ,123.12--descuento
+    ,123.12--porcentajeDescuento
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="codigoDescuento" type="VARCHAR(2)">CÓDIGO QUE IDENTIFICA EL TIPO DE DESCUENTO</api_param>
+    <api_param name="descripcion" type="VARCHAR(240)">DESCRIPCIÓN DEL DESCUENTO</api_param>
+    <api_param name="descuento" type="FLOAT">(OBLIGATORIO) VALOR DEL DESCUENTO</api_param>
+    <api_param name="porcentajeDescuento" type="FLOAT">(OBLIGATORIO) PORCENTAJE DEL DESCUENTO</api_param>
+  </function>
+  <function name="f_DatoEntrega_Agrega">
+    <api_synopsis> Agregar DatoEntrega</api_synopsis>
+    <api_usage> LISTADO DE INFORMACIÓN QUE PERMITE HACER LA ENTREGA DE LA MERCANCÍA</api_usage>
+    <api_usage>
+      <pre> CALL f_DatoEntrega_Agrega(
+     123456789--cantidad
+    ,123456789--cantidadMaxima
+    ,123456789--cantidadMinima
+    ,"Texto"--ciudadEntrega
+    ,"Texto"--descripcion
+    ,"Texto"--direccionEntrega
+    ,"Texto"--empresaTransportista
+    ,"Texto"--identificacionTransportista
+    ,"Texto"--identificadorTransporte
+    ,"Texto"--lugarEntrega
+    ,"Texto"--nitEmpresaTransportista
+    ,"Texto"--nombreTransportista
+    ,"Texto"--paisEntrega
+    ,"2020-03-24 10:15"--periodoEntregaEstimado
+    ,"2020-03-24 10:15"--periodoEntregaPrometido
+    ,"2020-03-24 10:15"--periodoEntregaSolicitado
+    ,"Texto"--telefonoEntrega
+    ,"Texto"--tiempoRealEntrega
+    ,"Texto"--tipoIdentificacionEmpresaTransportista
+    ,"Texto"--tipoidentificacionTransportista
+    ,"2020-03-24 10:15"--ultimaFechaEntrega
+    ,"Texto"--dVIdentificaciontransportista
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="cantidad" type="BIGINT">(OBLIGATORIO) CANTIDAD POR TRANSPORTAR</api_param>
+    <api_param name="cantidadMaxima" type="BIGINT">(OBLIGATORIO) CANTIDAD MAXIMA POR TRANSPORTAR</api_param>
+    <api_param name="cantidadMinima" type="BIGINT">(OBLIGATORIO) CANTIDAD MÍNIMA POR TRANSPORTAR</api_param>
+    <api_param name="ciudadEntrega" type="STRING">CIUDA DE ENTREGA</api_param>
+    <api_param name="descripcion" type="STRING">DESCRIPCIONES ASOCIADAS A LA ENTREGA COMO REFERENCIA</api_param>
+    <api_param name="direccionEntrega" type="STRING">DIRECCION DE ENTREGA</api_param>
+    <api_param name="empresaTransportista" type="STRING">EMPRESA TRANSPORTISTA</api_param>
+    <api_param name="identificacionTransportista" type="STRING">(OBLIGATORIO) NÚMERO DEL DOCUMENTO DE IDENTIFICACIÓN SIN DIGITO DE VERIFICACION EN CASO DEL NIT, SIN CARACTERES ESPECIALES</api_param>
+    <api_param name="identificadorTransporte" type="STRING">(OBLIGATORIO) PLACA DEL VEHÍCULO</api_param>
+    <api_param name="lugarEntrega" type="STRING">LUGAR DE ENTREGA</api_param>
+    <api_param name="nitEmpresaTransportista" type="STRING">NIT DE LA EMPRESA TRANSPORTISTA</api_param>
+    <api_param name="nombreTransportista" type="STRING">NOMBRE TRANSPORTISTA</api_param>
+    <api_param name="paisEntrega" type="STRING">(OBLIGATORIO) PAIS CLIENTE EN ESTÁNDAR ISO 3116-1, ES DECIR COLOMBIA "CO"</api_param>
+    <api_param name="periodoEntregaEstimado" type="DATETIME YEAR TO FRACTION(5)">PERIODO DE ENTREGA ESTIMADO</api_param>
+    <api_param name="periodoEntregaPrometido" type="DATETIME YEAR TO FRACTION(5)">PERIODO DE ENTREGA PROMETIDO</api_param>
+    <api_param name="periodoEntregaSolicitado" type="DATETIME YEAR TO FRACTION(5)">PERIODO DE ENTREGA SOLICITADO</api_param>
+    <api_param name="telefonoEntrega" type="STRING">TELEFONO DE ENTREGA</api_param>
+    <api_param name="tiempoRealEntrega" type="STRING">TIEMPO REAL DE ENTREGA</api_param>
+    <api_param name="tipoIdentificacionEmpresaTransportista" type="STRING">TIPO DE IDENTIFICACION DE LA EMPRESA TRANSPORTISTA</api_param>
+    <api_param name="tipoidentificacionTransportista" type="STRING">(OBLIGATORIO) VER EN LA SECCION DE TABLAS -&gt; TIPO DE DOCUMENTO DE IDENTIFICACIÓN</api_param>
+    <api_param name="ultimaFechaEntrega" type="DATETIME YEAR TO FRACTION(5)">ULTIMA FECHA DE ENTREGA</api_param>
+    <api_param name="dVIdentificaciontransportista" type="STRING">(OBLIGATORIO) DIGITO DE VERIFICACIÓN DE LA IDENTIFICACIÓN, SE REQUIERE OBLIGATORIO CUANDO EL TIPO DE IDENTIFICACION DEL TRANSPORTISTA ES 31 (NIT)</api_param>
+  </function>
+  <function name="f_CodigoBarra_Agrega">
+    <api_synopsis> Agregar CodigoBarra</api_synopsis>
+    <api_usage> LISTADO DE LOS CÓDIGOS DE BARRAS</api_usage>
+    <api_usage>
+      <pre> CALL f_CodigoBarra_Agrega(
+     "Texto"--cadenaACodificar
+    ,"Texto"--descripcion
+    ,"2020-03-24 10:15"--fecha
+    ,123--orden
+    ,"Texto"--tipoCodificacion
+    ,"Texto"--tipoModelo
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="cadenaACodificar" type="VARCHAR(255)">(OBLIGATORIO) CADENA PARA LA GENERACIÓN DEL CÓDIGO DE BARRAS, VER LAS ESPECIFICACIONES PARA EL ENVÍO DEL CÓDIGO DE BARRAS DE RECAUDO. SI LA LISTA DE CODIGO DE BARRAS TIENE MAS DE UN ITEM ESTE VALOR SE HACE OBLIGATORIO PARA EL PT.</api_param>
+    <api_param name="descripcion" type="VARCHAR(255)">NOTA ASOCIADA AL CÓDIGO DE BARRAS</api_param>
+    <api_param name="fecha" type="DATETIME YEAR TO FRACTION(5)">FECHA DE REFERENCIA ASOCIADA AL CAMPO NECESARIO PARA MOSTRAR EN LA REPRESENTACIÓNGRÁFICA</api_param>
+    <api_param name="orden" type="INTEGER">ORDEN EN EL QUE SE MOSTRARÁ CADA CÓDIGO EN LA REPRESENTACIÓN GRÁFICA</api_param>
+    <api_param name="tipoCodificacion" type="VARCHAR(255)">INDICA SI ES EAN, UPC U OTRA VERSIÓN. POR DEFECTO SE USARÁ EL EAN128</api_param>
+    <api_param name="tipoModelo" type="VARCHAR(255)">(OBLIGATORIO) MODELO DE CÓDIGO QUE SE IMPLEMENTARÁ AL INTERIOR DE DISPAPELES. DISPAPELES INDICARÁ ESTE VALOR PARA QUE SEA ENVIADO POR EL FACTURADOR DE ACUERDO CON SU NECESIDAD. SI LA LISTA DE CODIGO DE BARRAS TIENE MAS DE UN ITEM ESTE VALOR SE HACE OBLIGATORIO PARA EL PT.</api_param>
+  </function>
+  <function name="f_Cargo_Agrega">
+    <api_synopsis> Agregar Cargo</api_synopsis>
+    <api_usage> LISTADO DE CARGOS ASOCIADOS A LA FACTURA</api_usage>
+    <api_usage>
+      <pre> CALL f_Cargo_Agrega(
+     "Texto"--codigoCargo
+    ,"Texto"--descripcion
+    ,123.12--porcentajeCargo
+    ,123.12--valorCargo
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="codigoCargo" type="VARCHAR(2)">CÓDIGO INTERNO QUE MANEJA LA EMPRESA PARA ESE CARGO. AÚN LA DIAN NO DEFINE CODIGOS ESTÁNDAR</api_param>
+    <api_param name="descripcion" type="VARCHAR(240)">DESCRIPCIÓN DEL CARGO APLICADO A LA FACTURA</api_param>
+    <api_param name="porcentajeCargo" type="FLOAT">PORCENTAJE DEL CARGO</api_param>
+    <api_param name="valorCargo" type="FLOAT">(OBLIGATORIO) INDICA SI ES UN CARGO O UN DESCUENTO APLICADO A LA FACTURA</api_param>
+  </function>
+  <function name="f_CampoAdicional_Agrega">
+    <api_synopsis> Agregar CampoAdicional</api_synopsis>
+    <api_usage> LISTA QUE ALMACENA UNO O VARIOS ELEMENTOS CON ASOCIACIÓN CAMPO VALOR PARA MANEJAR CAMPOS NO TENIDOS EN CUENTA EN EL ESTÁNDAR UBL2.1 DEFINIDO POR LA DIAN. ESTE CAMPO HACE PARTE DE LOS CAMBIOS POR EL NUEVO MODELO</api_usage>
+    <api_usage>
+      <pre> CALL f_CampoAdicional_Agrega(
+     "2020-03-24 10:15"--fecha
+    ,"Texto"--nombreCampo
+    ,123--orden
+    ,123--seccion
+    ,"Texto"--valorCampo
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="fecha" type="DATETIME YEAR TO FRACTION(5)">FECHA DE REFERENCIA ASOCIADA AL CAMPO NECESARIO PARA MOSTRAR EN LA REPRESENTACIÓN GRÁFICA</api_param>
+    <api_param name="nombreCampo" type="VARCHAR(50)">DESCRIPCION DEL VALOR ALMACENADO. PARA EL MANEJO DE LAS NOTAS DE LA DIAN, COLOCAR EL CONCEPTO DESCRIPCION</api_param>
+    <api_param name="orden" type="INTEGER">ORDEN EN EL QUE SE PRESENTARÁ LA INFORMACIÓN, DA UNA JERARQUIA AL MOMENTO DE PINTAR EL DATO</api_param>
+    <api_param name="seccion" type="INTEGER">GRUPO DE DATOS ADICIONALES QUE SIRVE PARA SABER UNA DETERMINADA POSICIÓN EN LA QUE SE QUIERA REPRESENTAR LA INFORMACIÓN EN EL PDF</api_param>
+    <api_param name="valorCampo" type="VARCHAR(800)">VALOR DEL CAMPO ADICIONAL INDICADO</api_param>
+  </function>
+  <function name="f_Anticipo_Agrega">
+    <api_synopsis> Agregar Anticipo</api_synopsis>
+    <api_usage> ESTRUCTURA QUE DETALLA CADA ANTICIPO ASOCIADO A LA FACTURA</api_usage>
+    <api_usage>
+      <pre> CALL f_Anticipo_Agrega(
+     123.12--anticipo
+    ,"Texto"--descripcion
+    ,"2020-03-24 10:15"--fechaAnticipo
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="anticipo" type="FLOAT">(OBLIGATORIO) VALOR DE UN ANTICIPO DE LA FACTURA</api_param>
+    <api_param name="descripcion" type="STRING">DESCRIPCIONES ASOCIADAS A LA ENTREGA COMO REFERENCIA</api_param>
+    <api_param name="fechaAnticipo" type="DATETIME YEAR TO FRACTION(5)">FECHA DE UNO DE LOS ANTICIPOS</api_param>
+  </function>
+  <function name="f_Adquirente_Agrega">
+    <api_synopsis> Agregar Adquirente</api_synopsis>
+    <api_usage> LISTA DE ADQUIRENTES O CLIENTES QUE COMPRAN ASOCIADOS A LA FACTURA.</api_usage>
+    <api_usage>
+      <pre> CALL f_Adquirente_Agrega(
+     "Texto"--barioLocalidad
+    ,"Texto"--ciudad
+    ,"Texto"--codigoCIUU
+    ,"Texto"--codigoPostal
+    ,"Texto"--departamento
+    ,"Texto"--descripcionCiudad
+    ,"Texto"--digitoverificacion
+    ,"Texto"--direccion
+    ,"Texto"--email
+    ,"Texto"--envioPorEmailPlataforma
+    ,"Texto"--matriculaMercantil
+    ,"Texto"--nitProveedorTecnologico
+    ,"Texto"--nombreCompleto
+    ,"Texto"--nombredepartamento
+    ,"Texto"--numeroIdentificacion
+    ,"Texto"--pais
+    ,"Texto"--paisnombre
+    ,"Texto"--regimen
+    ,"Texto"--telefono
+    ,123--tipoIdentificacion
+    ,"Texto"--tipoPersona
+    ,"Texto"--tipoobligacion
+ )</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="barioLocalidad" type="VARCHAR(50)">BARRIO DEL CLIENTE</api_param>
+    <api_param name="ciudad" type="VARCHAR(50)">(OBLIGATORIO) CIUDAD DE RESIDENCIA DEL CLIENTE. EL CAMPO CIUDAD DEBE RECIBIR EL CODIGO DEL MUNICIPIO SEGÚN TABLA DEL DANE. VER TABLA ANEXA SUB-REGIONES DANE.</api_param>
+    <api_param name="codigoCIUU" type="VARCHAR(30)">CODIGO CIIU DEL ADQUIRENTE</api_param>
+    <api_param name="codigoPostal" type="VARCHAR(6)">CODIGO POSTAL</api_param>
+    <api_param name="departamento" type="VARCHAR(50)">(OBLIGATORIO) DEPARTAMENTO DE RESIDENCIA DEL CLIENTE. EL CAMPO DEPARTAMENTO DEBE RECIBIR EL CODIGO DEL MUNICIPIO SEGÚN TABLA DEL DANE. VER TABLA ANEXA SUB-REGIONES DANE.</api_param>
+    <api_param name="descripcionCiudad" type="VARCHAR(100)">NOMBRE DESCRIPTIVO DE LA CIUDAD</api_param>
+    <api_param name="digitoverificacion" type="VARCHAR(2)">DÍGITO DE VERIFICACIÓN DEL DOCUMENTO DE IDENTIDAD. SE HACE OBLIGATORIO CUANDO EL TIPODOCUMENTO ES NIT.</api_param>
+    <api_param name="direccion" type="VARCHAR(100)">(OBLIGATORIO) DIRECCIÓN DEL CLIENTE</api_param>
+    <api_param name="email" type="VARCHAR(200)">CORREO ELECTRÓNICO DEL CLIENTE. ESTE CAMPO SE VUELVE OBLIGATORIO SI EL CAMPO APLICAFEL ES “SI” Y ENVIOPOREMAILPLATAFORMA ES EMAIL</api_param>
+    <api_param name="envioPorEmailPlataforma" type="VARCHAR(10)">SI APLICA FEL ES SI, DEBE INDICAR SI EL ENVÍO SE HARÁ AL EMAIL O POR PLATAFORMA TECNOLÓGICA. SI NO SE CARGA CON LAS VARIABLES EMAIL O PLATAFORMA NO SE TRANSMITIRÁ EL DOCUMENTO.</api_param>
+    <api_param name="matriculaMercantil" type="VARCHAR(60)">NUMERO DE MATRICULA MERCANTIL ASOCIADA AL PREFIJO.</api_param>
+    <api_param name="nitProveedorTecnologico" type="VARCHAR(30)">NIT DEL PROVEEDOR TECNOLOGICO. ESTE CAMPO ES OBLIGATORIO SI envioPorEmailPlataforma ES PLATAFORMA</api_param>
+    <api_param name="nombreCompleto" type="VARCHAR(240)">(OBLIGATORIO) CONCATENACIÓN DE NOMBRES Y APELLIDOS. SI NO SE TIENEN LOS NOMBRE Y APELLIDOS POR SEPARADOS SE PUEDE ENVIAR SOLO ESTE CAMPO. SI LA PERSONA ES JURIDICA, EN ESTE CAMPO SE AGREGA LA RAZON SOCIAL.</api_param>
+    <api_param name="nombredepartamento" type="VARCHAR(50)">NOMBRE DEL DEPARTAMENTO</api_param>
+    <api_param name="numeroIdentificacion" type="VARCHAR(30)">(OBLIGATORIO) NÚMERO DEL DOCUMENTO DE IDENTIFICACIÓN SIN DIGITO DE VERIFICACION EN CASO DEL NIT, SIN CARACTERES ESPECIALES</api_param>
+    <api_param name="pais" type="VARCHAR(2)">(OBLIGATORIO) PAIS CLIENTE EN ESTÁNDAR ISO 3116-1, ES DECIR COLOMBIA "CO"</api_param>
+    <api_param name="paisnombre" type="VARCHAR(30)">NOMBRE DEL PAÍS RELACIONADO CON EL CÓDIGO ENVIADO</api_param>
+    <api_param name="regimen" type="VARCHAR(240)">04. SIMPLE 05. ORDINARIO</api_param>
+    <api_param name="telefono" type="VARCHAR(50)">TELÉFONO DEL CLIENTE</api_param>
+    <api_param name="tipoIdentificacion" type="INTEGER">(OBLIGATORIO) VER EN LA SECCION DE TABLAS -&gt; TIPO DE DOCUMENTO DE IDENTIFICACIÓN</api_param>
+    <api_param name="tipoPersona" type="VARCHAR(1)">(OBLIGATORIO) TIPO DE PERSONA, 1. PERSONA JURÍDICA, 2. PERSONA NATURAL</api_param>
+    <api_param name="tipoobligacion" type="VARCHAR(30)">CODIGO DE LA OBLIGACIÓN CUANDO EL TIPO DE IDENTIFICACIÓN ES NIT. VER TABLA RESPONSABILIDADES FISCALES. SI LA EMPRESA TIENE MAS DE UN TIPO DE OBLIGACIÓN, DEBERÁN IR SEPARADOS POR PUNTO Y COMA “;”. GENERA RECHAZO SI SE ENVÍA UN VALOR DIFERENTE DE LA TABLA DE RESPONSABILIDADES FISCALES.</api_param>
+  </function>
+</api_class>

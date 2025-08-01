@@ -1,0 +1,328 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<api_class name="Enlace_Archivo_bbl" package="DispapelesWS7" top="../" next="Enlace_DocEstado_bbl" prev="DispapelesV7LoteDocEstado">
+  <api_synopsis> Consulta de archivos.</api_synopsis>
+  <api_usage> Enlace con servicio web de Dispapeles para
+ la consulta de documentos de facturas electrónicas.</api_usage>
+  <function name="f_RespuestaTamanoConsultarRegistrosIA_Recupera">
+    <api_synopsis> Regresa el número de cadenas IA.</api_synopsis>
+    <api_usage> Regresa el número de cadenas existentes para una consulta de registros IA.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaTamanoConsultarRegistrosIA_Recupera()
+     RETURNING  tamano</pre>
+    </api_usage>
+    <return>tamano NÚMERO DE CADENAS EXISTENTES PARA UNA CONSULTA DE REGISTROS IA.</return>
+  </function>
+  <function name="f_RespuestaTamanoConsultarRegistrosIAManual_Recupera">
+    <api_synopsis> Regresa el número cadenas IA manual.</api_synopsis>
+    <api_usage> Regresa el número de cadenas existentes para la consulta de un rango de registros IA manual.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaTamanoConsultarRegistrosIAManual_Recupera()
+     RETURNING tamano</pre>
+    </api_usage>
+    <return>tamano NÚMERO DE CADENAS EXISTENTES PARA LA CONSULTA DE UN RANGO DE REGISTROS IA.</return>
+  </function>
+  <function name="f_RespuestaTamanoBorrarRegistrosIA_listaMensajes_Recupera">
+    <api_synopsis> Regresa el número de mensajes IA.</api_synopsis>
+    <api_usage> Regresa el número de mensajes después de la eliminación de registros IA.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaTamanoBorrarRegistrosIA_listaMensajes_Recupera()
+     RETURNING tamano</pre>
+    </api_usage>
+    <return>tamano  NÚMERO DE MENSAJES DESPUÉS DE LA ELIMINACIÓN DE REGISTROS IA. </return>
+  </function>
+  <function name="f_RespuestaTamanoBorrarRegistrosIA_listaArchivos_Recupera">
+    <api_synopsis> Regresa el número de archivos IA.</api_synopsis>
+    <api_usage> Regresa el número de archivos después de la eliminación de registros IA.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaTamanoBorrarRegistrosIA_listaArchivos_Recupera()
+     RETURNING tamano</pre>
+    </api_usage>
+    <return>tamano  NÚMERO DE ARCHIVOS DESPUÉS DE LA ELIMINACIÓN DE REGISTROS IA. </return>
+  </function>
+  <function name="f_RespuestaTamanoConsultarArchivos_listaMensajes_Recupera">
+    <api_synopsis> Recupera número de mensajes.</api_synopsis>
+    <api_usage> Regresa el número de mensajes asociados a la consulta de archivos.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaTamanoConsultarArchivos_listaMensajes_Recupera()
+     RETURNING tamano</pre>
+    </api_usage>
+    <return>tamano  NÚMERO DE MENSAJES ASOCIADOS A LA CONSULTA DE ARCHIVOS. </return>
+  </function>
+  <function name="f_RespuestaTamanoConsultarArchivos_listaArchivos_Recupera">
+    <api_synopsis> Recupera el número de archivos.</api_synopsis>
+    <api_usage> Recupera el número de archivos asociados a la respuesta del consumo del método consultar archivos.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaTamanoConsultarArchivos_listaArchivos_Recupera()
+     RETURNING tamano</pre>
+    </api_usage>
+    <return>tamano  NÚMERO DE ARCHIVOS CONTENIDOS EN LA CONSULTA DE ARCHIVOS. </return>
+  </function>
+  <function name="f_RespuestaConsultarRegistrosIAManual_Recupera">
+    <api_synopsis> Recupera cadena IA manual.</api_synopsis>
+    <api_usage> Recupera una cadena del listado manual de resultados correspondientes a la consulta un rango de registros IA. Acorde al indice indicado.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaConsultarRegistrosIAManual_Recupera(indice)
+    RETURNING cadena</pre>
+    </api_usage>
+    <return>cadena CADENA CON EL RESULTADO DE UNA CONSULTA A UN RANGO REGISTROS IA.</return>
+    <api_param name="indice" type="INTEGER">NÚMERO DE MENSAJE A CONSULTAR.</api_param>
+  </function>
+  <function name="f_RegistrosIAManual_Recupera">
+    <api_synopsis> Envia consultar registro IA Manual.</api_synopsis>
+    <api_usage> Envia la ejecución al servicio web de archivo metodo Consulta de registro IA manual.</api_usage>
+    <api_usage>
+      <pre> CALL f_RegistrosIAManual_Recupera() RETURNING wsstatus</pre>
+    </api_usage>
+    <return>wsstatus CÓDIGO DE ESTADO DE LA COMUNICACIÓN</return>
+  </function>
+  <function name="f_ConsultarRegistrosIAManual_Agrega">
+    <api_synopsis> Genera el filtro para consultar un rango de registros IA.</api_synopsis>
+    <api_usage> Genera la información que será utilizada para filtrar un rango de registros IA.</api_usage>
+    <api_usage>
+      <pre> CALL f_ConsultarRegistrosIAManual_Agrega(
+         999           --consecutivoFinal
+    ,    123           --consecutivoInicial
+    ,"1993-01-01 00:00"--fechaFinal
+    ,"1990-01-01 00:00"--fechaIncial
+    ,    123           --idEmpresa
+    ,"Texto"           --numeroIdentificacion
+    ,"Texto"           --prefijo
+ )</pre>
+    </api_usage>
+    <return>Sin_regreso</return>
+    <api_param name="consecutivoFinal" type="BIGINT">NÚMERO DE CONSECUTIVO FINAL DE LAS FACTURAS.</api_param>
+    <api_param name="consecutivoInicial" type="BIGINT">NÚMERO DE CONSECUTIVO INICIAL DE LAS FACTURAS.</api_param>
+    <api_param name="fechaFinal" type="DATETIME YEAR TO FRACTION(5)">FECHA FINAL DE LAS FACTURAS</api_param>
+    <api_param name="fechaIncial" type="DATETIME YEAR TO FRACTION(5)">FECHA INICIAL DE LAS FACTURAS</api_param>
+    <api_param name="idEmpresa" type="BIGINT">IDENTIFICADOR DE EMPRESA.</api_param>
+    <api_param name="numeroIdentificacion" type="VARCHAR(30)">NÚMERO DEL DOCUMENTO DE IDENTIFICACIÓN.</api_param>
+    <api_param name="prefijo" type="VARCHAR(5)">PREFIJO DE LOS DOCUMENTOS.</api_param>
+  </function>
+  <function name="f_RespuestaConsultarRegistrosIA_Recupera">
+    <api_synopsis> Recupera registro IA.</api_synopsis>
+    <api_usage> Recupera un nuevo registro al resultado de la consulta de registros IA. Acorde al indice indicado.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaConsultarRegistrosIA_Agrega(
+     1--indice
+ )
+ RETURNING cadena</pre>
+    </api_usage>
+    <return>cadena  CADENA CON EL RESULTADO DE LA CONSULTA DE REGISTROS IA.</return>
+    <api_param name="indice" type="INTEGER">NÚMERO DE CADENA A RECUPERAR.</api_param>
+  </function>
+  <function name="f_RegistrosIA_Recupera">
+    <api_synopsis> Envia consultar registro IA.</api_synopsis>
+    <api_usage> Envia la ejecución al servicio web de archivo metodo Consulta de registro IA.</api_usage>
+    <api_usage>
+      <pre> CALL f_RegistrosIA_Recupera() RETURNING wsstatus</pre>
+    </api_usage>
+    <return>wsstatus CÓDIGO DE ESTADO DE LA COMUNICACIÓN</return>
+  </function>
+  <function name="f_consultarRegistrosIA_Agrega">
+    <api_synopsis> Genera el filtro para consultar los registros IA.</api_synopsis>
+    <api_usage> Genera la información que será utilizada para filtrar los registros IA.</api_usage>
+    <api_usage>
+      <pre> CALL f_consultarRegistrosIA_Agrega(
+         123--consecutivo
+    ,"Texto"--contrasenia
+    ,    123--idEmpresa
+    ,"Texto"--prefijo
+    ,    123--tipoArchivo
+    ,"Texto"--tipoDocumento
+    ,"Texto"--token
+    ,"Texto"--usuario
+    ,"Texto"--version
+ )</pre>
+    </api_usage>
+    <return>Sin_regreso</return>
+    <api_param name="consecutivo" type="BIGINT">NÚMERO DE CONSECUTIVO DE LA FACTURA.</api_param>
+    <api_param name="contrasenia" type="VARCHAR(40)">CONTRASEÑA. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="idEmpresa" type="BIGINT">ID. DE EMPRESA. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="prefijo" type="VARCHAR(5)">PREFIJO DEL DOCUMENTO.</api_param>
+    <api_param name="tipoArchivo" type="INTEGER">INDICA QUE TIPO DE ARCHIVO SE DEBE DESCARGAR. 0 = PDF Y XML; 1 = PDF; 2 = XML</api_param>
+    <api_param name="tipoDocumento" type="VARCHAR(1)">TIPO DE DOCUMENTO ELECTRÓNICO.</api_param>
+    <api_param name="token" type="VARCHAR(40)">TOKEN. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="usuario" type="VARCHAR(40)">USUARIO. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="version" type="VARCHAR(40)">VERSIÓN DEL MANUAL CON LA QUE EL CLIENTE TRABAJÓ LA INTEGRACIÓN.</api_param>
+  </function>
+  <function name="f_RespuestaMensajesProcesoArchivo_Recupera">
+    <api_synopsis> Recuperar mensaje DescargaDocumentos.</api_synopsis>
+    <api_usage> Recupera un mensaje correspondiente a los existentes en la respuesta a la consulta de archivos.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaMensajesProcesoArchivo_Recupera(indice)
+ RETURNING
+     codigoMensaje
+    ,descripcionMensaje
+    ,rechazoNotificacion</pre>
+    </api_usage>
+    <return>codigoMensaje IDENTIFICADOR DEL MENSAJE</return>
+    <return>descripcionMensaje CAMPO QUE DESCRIBE LOS MENSAJES DE ERROR ASOCIADOS AL DOCUMENTO.</return>
+    <return>rechazoNotificacion CAMPO QUE DESCRIBE SI LA VALIDACIÓN ES DE TIPO RECHAZO (R) O NOTIFICACIÓN (N)</return>
+    <api_param name="indice" type="INTEGER">Número de mensaje a recuperar.</api_param>
+  </function>
+  <function name="f_ConsultarArchivos_Guardar">
+    <api_synopsis> Guardar archivos DescargaDocumentos.</api_synopsis>
+    <api_usage> Guarda todos los archivos que traiga de respuesta en el directorio especificado.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaArchivos_Guardar("c:\\Puerto\\")</pre>
+    </api_usage>
+    <return>sin retorno</return>
+    <api_param name="Ruta" type="STRING">Directorio en el que se guardaran los archivos.</api_param>
+  </function>
+  <function name="f_RespuestaArchivos_Recupera">
+    <api_synopsis> Recuperar archivo DescargaDocumentos.</api_synopsis>
+    <api_usage> Recupera un archivo, recibiendo como parámetro un número de archivo.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaArchivos_Recupera(indice)
+ RETURNING
+          formato
+        , mimeType
+        , nameFile
+        , streamFile</pre>
+    </api_usage>
+    <return>formato  EXTENSIÓN PARA EL ARCHIVO (.XML O .PDF)</return>
+    <return>mimeType MIMETYPE, FORMATO ESTÁNDAR DE HTML PARA IDENTIFICAR EL TIPO DE ARCHIVO.</return>
+    <return>nameFile NOMBRE DEL ARCHIVO, TAL COMO SE ENCUENTRA EN EL SERVIDOR.</return>
+    <return>streamFile FLUJO DE BYTES QUE CONTIENE EL ARCHIVO COMO UN ARREGLO DE BYTES.</return>
+    <api_param name="indice" type="INTEGER">Número de archivo a recuperar.</api_param>
+  </function>
+  <function name="f_consultarFacturaArchivo_Agrega">
+    <api_synopsis> Genera el filtro para consultar la factura.</api_synopsis>
+    <api_usage> Genera la información que será utilizada para filtrar la factura.</api_usage>
+    <api_usage>
+      <pre> CALL f_consultarFacturaArchivo_Agrega(
+         123--consecutivo
+    ,"Texto"--contrasenia
+    ,    123--idEmpresa
+    ,"Texto"--prefijo
+    ,    123--tipoArchivo
+    ,"Texto"--tipoDocumento
+    ,"Texto"--token
+    ,"Texto"--usuario
+    ,"Texto"--version
+ )</pre>
+    </api_usage>
+    <return>Sin_regreso</return>
+    <api_param name="consecutivo" type="BIGINT">NÚMERO DE CONSECUTIVO DE LA FACTURA.</api_param>
+    <api_param name="contrasenia" type="VARCHAR(40)">CONTRASEÑA. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="idEmpresa" type="BIGINT">ID. DE EMPRESA. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="prefijo" type="VARCHAR(5)">PREFIJO DEL DOCUMENTO.</api_param>
+    <api_param name="tipoArchivo" type="INTEGER">INDICA QUE TIPO DE ARCHIVO SE DEBE DESCARGAR. 0 = PDF Y XML; 1 = PDF; 2 = XML</api_param>
+    <api_param name="tipoDocumento" type="VARCHAR(1)">TIPO DE DOCUMENTO ELECTRÓNICO.</api_param>
+    <api_param name="token" type="VARCHAR(40)">TOKEN. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="usuario" type="VARCHAR(40)">USUARIO. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="version" type="VARCHAR(40)">VERSIÓN DEL MANUAL CON LA QUE EL CLIENTE TRABAJÓ LA INTEGRACIÓN.</api_param>
+  </function>
+  <function name="f_RespuestaDescargaDocumentos_Recupera">
+    <api_synopsis> Recuperar registro DescargaDocumentos.</api_synopsis>
+    <api_usage> Recupera un registro correspondiente a la respuesta derivada de la descarga de un documento.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaDescargaDocumentos_Recupera()
+ RETURNING
+     codigoRespuesta
+    ,consecutivo
+    ,descripcionRespuesta
+    ,estadoProceso
+    ,idErp
+    ,prefijo
+    ,tipoDocumento</pre>
+    </api_usage>
+    <return>codigoRespuesta CÓDIGO INTERNO CON EL RESULTADO DE LA OPERACIÓN.</return>
+    <return>consecutivo NÚMERO DE CONSECUTIVO DE LA FACTURA.</return>
+    <return>descripcionRespuesta TEXTO QUE DEVUELVE UN CÓDIGO SEGUIDO DEL MENSAJE QUE DESCRIBE ESE CÓDIGO. EJEMPLO: OK, SE HAN RECIBIDO 100 FACTURAS.</return>
+    <return>estadoProceso PREFIJO DE FACTURACIÓN.</return>
+    <return>idErp CÓDIGO INTERNO QUE IDENTIFICA LA FACTURA EN EL ERP.</return>
+    <return>prefijo PREFIJO DE DOCUMENTO, SOLO SI LA EMPRESA LO MANEJA.</return>
+    <return>tipoDocumento TIPO DE DOCUMENTO --1. FACTURA DE VENTA, 2. NOTA CRÉDITO, 3. NOTA DÉBITO 4.FACTURA DE EXPORTACIÓN, 5.FACTURA DE CONTINGENCIA, 6.FACTURA DE IMPORTACIÓN</return>
+  </function>
+  <function name="f_BorrarRegistrosIA_Guardar">
+    <api_synopsis> Guardar archivos de borrarRegistrosIA.</api_synopsis>
+    <api_usage> Guarda todos los archivos que traiga de respuesta de borrarRegistrosIA en el directorio especificado.</api_usage>
+    <api_usage>
+      <pre> CALL f_BorrarRegistrosIA_Guardar("c:\\Puerto\\")</pre>
+    </api_usage>
+    <return>sin retorno</return>
+    <api_param name="Ruta" type="STRING">Directorio en el que se guardaran los archivos.</api_param>
+  </function>
+  <function name="f_RespuestaBorrarRegistrosIAArchivos_Recupera">
+    <api_synopsis> Recuperar archivo BorrarRegistrosIA.</api_synopsis>
+    <api_usage> Recupera un archivo, de los restantes, después de la eliminación de registros IA.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaBorrarRegistrosIAArchivos_Recupera(indice)
+ RETURNING
+    ,formato
+    ,mimeType
+    ,nameFile
+    ,streamFile</pre>
+    </api_usage>
+    <return>formato  EXTENSIÓN PARA EL ARCHIVO (.XML O .PDF)</return>
+    <return>mimeType MIMETYPE, FORMATO ESTÁNDAR DE HTML PARA IDENTIFICAR EL TIPO DE ARCHIVO.</return>
+    <return>nameFile NOMBRE DEL ARCHIVO, TAL COMO SE ENCUENTRA EN EL SERVIDOR.</return>
+    <return>streamFile FLUJO DE BYTES QUE CONTIENE EL ARCHIVO COMO UN ARREGLO DE BYTES.</return>
+    <api_param name="indice" type="INTEGER">Número de archivo a recuperar.</api_param>
+  </function>
+  <function name="f_RespuestaBorrarRegistrosIAMensajes_Recupera">
+    <api_synopsis> Recuperar mensaje BorrarRegistrosIA.</api_synopsis>
+    <api_usage> Recupera un mensaje, del listado de mensajes restantes, después de la eliminación de registros IA.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaBorrarRegistrosIAMensajes_Recupera(indice)
+ RETURNING
+     codigoMensaje
+    ,descripcionMensaje
+    ,rechazoNotificacion</pre>
+    </api_usage>
+    <return>codigoMensaje IDENTIFICADOR DEL MENSAJE.</return>
+    <return>descripcionMensaje CAMPO QUE DESCRIBE LOS MENSAJES DE ERROR ASOCIADOS AL DOCUMENTO.</return>
+    <return>rechazoNotificacion CAMPO QUE DESCRIBE SI LA VALIDACIÓN ES DE TIPO RECHAZO (R) O NOTIFICACIÓN (N)</return>
+    <api_param name="indice" type="INTEGER">Número de mensaje a recuperar.</api_param>
+  </function>
+  <function name="f_RespuestaBorrarRegistrosIA_Recupera">
+    <api_synopsis> Recupera registro BorrarRegistrosIA.</api_synopsis>
+    <api_usage> Recupera la respuesta derivada de la eliminación de registros IA. En la cual se recibe un número de archivo y un número de mensaje a consultar.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaBorrarRegistrosIA_Recupera()
+ RETURNING
+     codigoRespuesta
+    ,consecutivo
+    ,descripcionRespuesta
+    ,estadoProceso
+    ,idErp
+    ,prefijo
+    ,tipoDocumento</pre>
+    </api_usage>
+    <return>codigoRespuesta CÓDIGO INTERNO CON EL RESULTADO DE LA OPERACIÓN.</return>
+    <return>consecutivo NÚMERO DE CONSECUTIVO DE LA FACTURA.</return>
+    <return>descripcionRespuesta TEXTO QUE DEVUELVE UN CÓDIGO SEGUIDO DEL MENSAJE QUE DESCRIBE ESE CÓDIGO. EJEMPLO: OK, SE HAN RECIBIDO 100 FACTURAS.</return>
+    <return>estadoProceso PREFIJO DE FACTURACIÓN.</return>
+    <return>idErp CÓDIGO INTERNO QUE IDENTIFICA LA FACTURA EN EL ERP.</return>
+    <return>prefijo PREFIJO DE DOCUMENTO, SOLO SI LA EMPRESA LO MANEJA.</return>
+    <return>tipoDocumento TIPO DE DOCUMENTO --1. FACTURA DE VENTA, 2. NOTA CRÉDITO, 3. NOTA DÉBITO 4.FACTURA DE EXPORTACIÓN, 5.FACTURA DE CONTINGENCIA, 6.FACTURA DE IMPORTACIÓN</return>
+  </function>
+  <function name="f_borrarRegistrosIA_Agrega">
+    <api_synopsis> Genera el filtro para consultar la factura a eliminar.</api_synopsis>
+    <api_usage> Genera la información que será utilizada para filtrar la factura a eliminar.</api_usage>
+    <api_usage>
+      <pre> CALL f_borrarRegistrosIA_Agrega(
+         123--consecutivo
+    ,"Texto"--contrasenia
+    ,    123--idEmpresa
+    ,"Texto"--prefijo
+    ,    123--tipoArchivo
+    ,"Texto"--tipoDocumento
+    ,"Texto"--token
+    ,"Texto"--usuario
+    ,"Texto"--version
+ )</pre>
+    </api_usage>
+    <return>Sin_regreso</return>
+    <api_param name="consecutivo" type="BIGINT">NÚMERO DE CONSECUTIVO DE LA FACTURA.</api_param>
+    <api_param name="contrasenia" type="VARCHAR(40)">CONTRASEÑA. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="idEmpresa" type="BIGINT">ID. DE EMPRESA. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="prefijo" type="VARCHAR(5)">PREFIJO DEL DOCUMENTO.</api_param>
+    <api_param name="tipoArchivo" type="INTEGER">INDICA QUE TIPO DE ARCHIVO SE DEBE DESCARGAR. 0 = PDF Y XML; 1 = PDF; 2 = XML</api_param>
+    <api_param name="tipoDocumento" type="VARCHAR(1)">TIPO DE DOCUMENTO ELECTRÓNICO.</api_param>
+    <api_param name="token" type="VARCHAR(40)">TOKEN. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="usuario" type="VARCHAR(40)">USUARIO. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="version" type="VARCHAR(40)">VERSIÓN DEL MANUAL CON LA QUE EL CLIENTE TRABAJÓ LA INTEGRACIÓN.</api_param>
+  </function>
+</api_class>

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<api_class name="Dispapeles_WS7_bbl" package="DispapelesWS7" top="../" prev="DispapelesV7Prin">
+  <function name="DocCabezaLlenar">
+    <api_synopsis> Llenado de encabezado</api_synopsis>
+    <api_usage> Esta función realiza el llenado de los campos contenidos en el encabezado del servicio web</api_usage>
+    <api_usage>
+      <pre> DEFINE total DECIMAL(10,2)
+ LET total = ordersTotal(r_customer.cust_id)</pre>
+    </api_usage>
+    <return>Sin regreso</return>
+    <api_param name="aplicafel" type="STRING">nada</api_param>
+    <api_param name="cantidadLineas" type="INTEGER">nada2</api_param>
+    <api_param name="centroCostos" type="STRING"/>
+    <api_param name="codigoPlantillaPdf" type="INTEGER"/>
+    <api_param name="codigovendedor" type="STRING"/>
+    <api_param name="consecutivo" type="BIGINT"/>
+    <api_param name="contrasenia" type="STRING"/>
+    <api_param name="descripcionCentroCostos" type="STRING"/>
+    <api_param name="fechafacturacion" type="DATETIME YEAR TO FRACTION(5)"/>
+    <api_param name="idEmpresa" type="BIGINT"/>
+    <api_param name="idErp" type="STRING"/>
+    <api_param name="incoterm" type="STRING"/>
+    <api_param name="nombrevendedor" type="STRING"/>
+    <api_param name="prefijo" type="STRING"/>
+    <api_param name="sucursal" type="STRING"/>
+    <api_param name="tipoOperacion" type="STRING"/>
+    <api_param name="tipodocumento" type="STRING"/>
+    <api_param name="tiponota" type="STRING"/>
+    <api_param name="token" type="STRING"/>
+    <api_param name="usuario" type="STRING"/>
+    <api_param name="version" type="STRING"/>
+  </function>
+  <function name="enviarDocumento"/>
+</api_class>

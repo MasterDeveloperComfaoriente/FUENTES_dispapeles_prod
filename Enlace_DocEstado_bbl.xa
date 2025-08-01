@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<api_class name="Enlace_DocEstado_bbl" package="DispapelesWS7" top="../" next="Enlace_Doc_bbl" prev="Enlace_Archivo_bbl">
+  <api_synopsis> Consulta el estado de un documento.</api_synopsis>
+  <api_usage> Enlace con servicio web de Dispapeles para
+ la consulta del estado de un documento de factura electrónica.</api_usage>
+  <function name="f_RespuestaTamanoConsultarEstado_listaMensajes_Recupera">
+    <api_synopsis> Recupera número de mensajes.</api_synopsis>
+    <api_usage> Regresa el número de mensajes asociados a la consulta del estado de una factura.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaTamanoConsultarEstado_listaMensajes_Recupera()
+     RETURNING tamano</pre>
+    </api_usage>
+    <return>tamano  NÚMERO DE MENSAJES ASOCIADOS A LA CONSULTA DEL ESTADO DE UNA FACTURA. </return>
+  </function>
+  <function name="f_RespuestaMensajesProceso_Recupera">
+    <api_synopsis> Recuperar mensaje.</api_synopsis>
+    <api_usage> Recupera un mensaje al resultado de la consulta del estado de una factura.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaMensajesProceso_Recupera(
+     indice  --Número de mensaje a recuperar
+ ) RETURNING
+     codigoMensaje
+    ,descripcionMensaje
+    ,rechazoNotificacion</pre>
+    </api_usage>
+    <return>codigoMensaje IDENTIFICADOR DEL MENSAJE.  </return>
+    <return>descripcionMensaje CAMPO QUE DESCRIBE LOS MENSAJES DE ERROR ASOCIADOS AL DOCUMENTO</return>
+    <return>rechazoNotificacion CAMPO QUE DESCRIBE SI LA VALIDACIÓN ES DE TIPO RECHAZO (R) O NOTIFICACIÓN (N)</return>
+    <api_param name="indice" type="INTEGER">NÚMERO DE MENSAJE A RECUPERAR</api_param>
+  </function>
+  <function name="f_RespuestaConsultarEstado_Recupera">
+    <api_synopsis> Recupera un registro de respuesta.</api_synopsis>
+    <api_usage> Recupera un registro de respuesta correspondiente al consumo del método ConsultarEstado.</api_usage>
+    <api_usage>
+      <pre> CALL f_RespuestaConsultarEstado_Recupera()
+  RETURNING
+     codigoQr
+    ,codigoUltimoEstadoAdquirente
+    ,codigoUltimoEstadoDian
+    ,codigoUltimoEstadoDispapeles
+    ,codigoUltimoEstadoEmail
+    ,consecutivo
+    ,cufe
+    ,descripcionUltimoEstadoAdquirente
+    ,descripcionUltimoEstadoDian
+    ,descripcionUltimoEstadoDispapeles
+    ,descripcionUltimoEstadoEmail
+    ,estadoProceso
+    ,fechaFactura
+    ,fechaRespuesta
+    ,fechaRespuestaUltimoEstadoAdquirente
+    ,fechaRespuestaUltimoEstadoDian
+    ,fechaRespuestaUltimoEstadoDispapeles
+    ,fechaRespuestaUltimoEstadoEmail
+    ,firmaDelDocumento
+    ,idErp
+    ,idLote
+    ,prefijo
+    ,selloDeValidacion
+    ,tipoDocumento</pre>
+    </api_usage>
+    <return>codigoQr CÓDIGO QR.</return>
+    <return>codigoUltimoEstadoAdquirente CÓDIGO DEL ESTADO DEL DOCUMENTO CON RELACIÓN AL ADQUIRENTE. ESTOS CÓDIGOS SON INTERNOS DE DISPAPELES.</return>
+    <return>codigoUltimoEstadoDian SE DEVUELVE EL CÓDIGO QUE MANEJA LA DIAN PARA DICHOS ESTADOS.</return>
+    <return>codigoUltimoEstadoDispapeles CÓDIGO DE DISPAPELES PARA IDENTIFICAR CADA FASE DE LA CREACIÓN DEL DOCUMENTO.</return>
+    <return>codigoUltimoEstadoEmail SE DEVUELVE EL CÓDIGO DE LOS ESTADOS DEL ENVÍO.</return>
+    <return>consecutivo  NÚMERO CONSECUTIVO DE LA FACTURA.</return>
+    <return>cufe CUFE DE LA FACTURA.</return>
+    <return>descripcionUltimoEstadoAdquirente DESCRIPCIÓN DEL ESTADO DEL DOCUMENTO POR PARTE DEL ADQUIRENTE, ES DECIR, SI SE ACUSÓ EL RECIBO, SE ACEPTÓ O RECHAZÓ.</return>
+    <return>descripcionUltimoEstadoDian CAMPO QUE DESCRIBE EL ÚLTIMO ESTADO DEL DOCUMENTO ANTE LA DIAN, ES DECIR, SI SE RECIBIÓ EL ENVÍO Y SI PASÓ O NO LAS VALIDACIONES.</return>
+    <return>descripcionUltimoEstadoDispapeles SE DEVUELVE EL ULTIMO ESTADO DEL DOCUMENTO EN LA PLATAFORMA DE DISPAPELES, ESTO ES, SI PASA O NO LAS VALIDACIONES INTERNAS, SI SE GENERA Y FIRMA EL XML, SI SE GENERA LA REPRESENTACIÓN Y SI SE PRESENTA UN ERROR EN CUALQUIERA DE ESAS ETAPAS.</return>
+    <return>descripcionUltimoEstadoEmail CAMPO QUE DESCRIBE EL ÚLTIMO ESTADO DEL DOCUMENTO EN EL PROCESO DE ENVÍO POR EMAIL.</return>
+    <return>estadoProceso 0 = ERROR; 1 = EXITOSO; 2 = EXITOSO CON NOTIFICACIONES; 3 = DOCUMENTO INGRESADO PREVIAMENTE; 4 = EL DOCUMENTO ESTÁ SIENDO PROCESADO; 24 = CONTINGENCIA DIAN</return>
+    <return>fechaFactura FECHA EN QUE SE CREÓ EL DOCUMENTO EN EL ERP DEL FACTURADOR.</return>
+    <return>fechaRespuesta FECHA Y HORA DE LA RESPUESTA LA CONSULTA.</return>
+    <return>fechaRespuestaUltimoEstadoAdquirente FECHA Y HORA DE LA PULTIMA MODIFICACIÓN AL ESTADO DEL DOCUMENTO CON RELACIÓN AL ADQUIRENTE. ESTA FECHA ES INTERNA DE DISPAPELES.</return>
+    <return>fechaRespuestaUltimoEstadoDian FECHA EN LA QUE CONTESTÓ LA DIAN.</return>
+    <return>fechaRespuestaUltimoEstadoDispapeles FECHA Y HORA DE LA ÚLTIMA MODIFICACIÓN, POR PARTE DE DISPAPELES, AL DOCUMENTO.</return>
+    <return>fechaRespuestaUltimoEstadoEmail FECHA EN LA QUE SE ENVÍA EL EMAIL.</return>
+    <return>firmaDelDocumento FIRMA DEL DOCUMENTO EN CASO TAL EL CLIENTE LO REQUIERA PARA CONTROL INTERNO.</return>
+    <return>idErp CÓDIGO INTERNO QUE IDENTIFICA LA FACTURA EN EL ERP.</return>
+    <return>idLote DENTIFICADOR DEL LOTE AL QUE PERTENECE LA FACTURA, APLICA SOLO SI LA FACTURACIÓN ES POR LOTE.</return>
+    <return>prefijo PREFIJO DEL DOCUMENTO.</return>
+    <return>selloDeValidacion FIRMA DE VALIDACIÓN POR PARTE DE LA DIAN, SE DEVUELVE PARA CONTROL INTERNO DEL CLIENTE.</return>
+    <return>tipoDocumento TIPO DE DOCUMENTO ELECTRÓNICO.</return>
+  </function>
+  <function name="f_ConsultarEstado_Agrega">
+    <api_synopsis> Genera el filtro para consultar el estado de una factura.</api_synopsis>
+    <api_usage> Genera la información que será utilizada para filtrar la factura, de la cual se desea conocer su estado.</api_usage>
+    <api_usage>
+      <pre> CALL f_ConsultaEstado_Agrega(
+         123--consecutivo
+    ,"Texto"--contrasenia
+    ,    123--idEmpresa
+    ,"Texto"--prefijo
+    ,"Texto"--tipoDocumento
+    ,"Texto"--token
+    ,"Texto"--usuario
+    ,"Texto"--version
+ )</pre>
+    </api_usage>
+    <return>Sin_regreso</return>
+    <api_param name="consecutivo" type="BIGINT">NÚMERO DE CONSECUTIVO DE LA FACTURA.</api_param>
+    <api_param name="contrasenia" type="VARCHAR(40)">CONTRASEÑA. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="idEmpresa" type="BIGINT">ID. DE EMPRESA. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="prefijo" type="VARCHAR(5)">PREFIJO DEL DOCUMENTO.</api_param>
+    <api_param name="tipoDocumento" type="VARCHAR(1)">TIPO DE DOCUMENTO ELECTRÓNICO.</api_param>
+    <api_param name="token" type="VARCHAR(40)">TOKEN. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="usuario" type="VARCHAR(40)">USUARIO. CAMPOS PARA VALIDAR LA SEGURIDAD. ESTOS VALORES SON ENTREGADOS POR DISPAPELES A CADA EMPRESA FACTURADORA.</api_param>
+    <api_param name="version" type="VARCHAR(40)">VERSIÓN DEL MANUAL CON LA QUE EL CLIENTE TRABAJÓ LA INTEGRACIÓN.</api_param>
+  </function>
+</api_class>
