@@ -1,0 +1,3 @@
+FUNCTION prueba()
+DISPLAY "Hola Mundo!"
+END FUNCTION 
