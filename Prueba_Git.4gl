@@ -1,3 +1,9 @@
+
+
+MAIN
+CALL  prueba()
+END MAIN 
+
 FUNCTION prueba()
 DISPLAY "Hola Mundo!"
 END FUNCTION 

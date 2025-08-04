@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <WorkspaceViewState version="1.0">
   <ExpandedNodes>
-    <Node path="DispapelesProd.4pw" type="pm/main-project"/>
-    <Node path="DispapelesProd.4pw/Group" type="pm/group"/>
-    <Node path="DispapelesProd.4pw/Group/ConsumoArchivo" type="pm/application"/>
-    <Node path="DispapelesProd.4pw/Group/ConsumoDoc" type="pm/application"/>
-    <Node path="DispapelesProd.4pw/Group/ConsumoDocEstado" type="pm/application"/>
-    <Node path="DispapelesProd.4pw/Group/Dispapeles" type="pm/library"/>
+    <Node path=""/>
+    <Node path="/Group[group]"/>
+    <Node path="/Group[group]/ConsumoArchivo[application]"/>
+    <Node path="/Group[group]/ConsumoDoc[application]"/>
+    <Node path="/Group[group]/ConsumoDocEstado[application]"/>
+    <Node path="/Group[group]/Dispapeles[library]"/>
+    <Node path="/Group[group]/Prueba[application]"/>
   </ExpandedNodes>
   <OpenDocuments>
     <Document container="true" filePath="Enlace_Doc_bbl.4gl" locator="1:1" module="mod-ce3">
@@ -15,6 +16,9 @@
     <Document container="true" filePath="Funciones_genericas.4gl" locator="6:87" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
+    <Document container="true" filePath="Prueba_Git.4gl" locator="9:14" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
   </OpenDocuments>
-  <CurrentDocument filePath="Funciones_genericas.4gl" module="mod-ce3"/>
+  <CurrentDocument filePath="Prueba_Git.4gl" module="mod-ce3"/>
 </WorkspaceViewState>
