@@ -9,7 +9,6 @@
 <File n="ConsumoDocEstadoPrin.4gl" s="1" ts="20250804074827748">
 <Dep t="Enlace_DocEstado_bbl.4gl"/>
 </File>
-<File n="Prueba_Git.4gl" s="1" ts="20250804102236465"/>
 <File n="DispapelesArchivo.4gl" s="1" ts="20250804074827775">
 <Ref t="DispapelesArchivo.inc"/>
 </File>
@@ -38,4 +37,5 @@
 <Ref t="DispapelesDoc.inc"/>
 <Dep t="DispapelesDoc.4gl"/>
 </File>
+<File n="Prueba_Git.4gl" s="1" ts="20250804142429032"/>
 </WorkspaceDatabase>
