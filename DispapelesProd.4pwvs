@@ -16,7 +16,7 @@
     <Document container="true" filePath="Funciones_genericas.4gl" locator="6:87" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="Prueba_Git.4gl" locator="1:1:3:9" module="mod-ce3">
+    <Document container="true" filePath="Prueba_Git.4gl" locator="11:33" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
   </OpenDocuments>
